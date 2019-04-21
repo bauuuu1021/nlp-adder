@@ -145,4 +145,26 @@ print("MSG : Prediction")
 ## Try to test and evaluate your model ##############
 ## ex. test_x = ["555+175", "860+7  ", "340+29 "]
 ## ex. test_y = ["730 ", "867 ", "369 "] 
+
+test_size = 1000
+right = 0
+
+for _ in range (test_size):
+    ind = np.random.randint(0, 60000)
+    rowx, rowy = test_x[np.array([ind])], test_y[np.array([ind])]
+    preds = model.predict_classes(rowx, verbose=0)
+    q = ctable.decode(rowx[0])
+    correct = ctable.decode(rowy[0])
+    guess = ctable.decode(preds[0], calc_argmax=False)
+    print('Q', q[::-1] if REVERSE else q, end=' ')
+    print('T', correct, end=' ')
+    if correct == guess:
+        right += 1
+        print(colors.ok + '☑' + colors.close, end=' ')
+    else:
+        print(colors.fail + '☒' + colors.close, end=' ')
+    print(guess) 
+
+print('Correctness: %f %%'%((right/test_size)*100))   
+
 #####################################################
