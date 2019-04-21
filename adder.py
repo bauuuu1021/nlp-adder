@@ -1,4 +1,5 @@
 from keras.models import Sequential
+from keras.layers import Dense
 from keras import layers
 import numpy as np
 from six.moves import range
@@ -102,6 +103,16 @@ print('Build model...')
 
 ############################################
 ##### Build your own model here ############
+
+model = Sequential()
+model.add(RNN(HIDDEN_SIZE, input_shape=(MAXLEN, len(chars))))   # shape (7,12)
+model.add(layers.RepeatVector(DIGITS + 1))
+model.add(RNN(HIDDEN_SIZE, return_sequences=True))
+model.add(layers.TimeDistributed(layers.Dense(len(chars), activation='softmax')))
+model.compile(loss='categorical_crossentropy',
+              optimizer='adam',
+              metrics=['accuracy'])
+
 ############################################
 
 model.summary()
