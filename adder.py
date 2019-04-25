@@ -1,10 +1,10 @@
-def add():
-    from keras.models import Sequential
-    from keras.layers import Dense
-    from keras import layers
-    import numpy as np
-    from six.moves import range
+from keras.models import Sequential
+from keras.layers import Dense
+from keras import layers
+import numpy as np
+from six.moves import range
 
+def add():
     class colors:
         ok = '\033[92m'
         fail = '\033[91m'
@@ -166,7 +166,13 @@ def add():
             print(colors.fail + '☒' + colors.close, end=' ')
         print(guess) 
 
-    print('Correctness: %f %%'%((right/test_size)*100))   
+    correctness = (right/test_size)*100
+    print('Correctness: %f %%'%(correctness)) 
+    
+    if __name__ != "__main__":
+        fp = open("tmp.txt","a")
+        fp.write("%f\n"%(correctness))
+        fp.close()  
 
     #####################################################
 
