@@ -37,7 +37,7 @@ plt.legend()
 for i, v in enumerate(cor):
     plt.text(pos[i] - 0.08, v + 0.1, str(v))
 
-plt.savefig('../img/test.png')
+plt.savefig('../img/origin.png')
 plt.show()
 
 print(exT)

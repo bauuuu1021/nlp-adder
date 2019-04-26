@@ -2,16 +2,16 @@ from keras.models import Sequential
 from keras.layers import Dense
 from keras import layers
 import numpy as np
+import time
 from six.moves import range
 
-def sub(EPOCH):
+def sub(DIGITS, EPOCH):
     class colors:
         ok = '\033[92m'
         fail = '\033[91m'
         close = '\033[0m'
 
     TRAINING_SIZE = 80000
-    DIGITS = 3
     REVERSE = False
     MAXLEN = DIGITS + 1 + DIGITS
     chars = '0123456789- '
@@ -168,7 +168,17 @@ def sub(EPOCH):
         fp.close()     
 
 def origin_sub():
-    sub(100)
+    digit = 3
+    epoch = 100
+    sub(digit, epoch)
+
+def digit_sub():
+    exT = np.zeros((3), dtype=float)
+    for i in range(3,6):
+        start = time.time()
+        sub(i, 100)
+        exT[i-3] = time.time()-start
+    return exT
     
 if __name__ == "__main__":
     origin_sub()

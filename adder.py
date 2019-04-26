@@ -2,16 +2,16 @@ from keras.models import Sequential
 from keras.layers import Dense
 from keras import layers
 import numpy as np
+import time
 from six.moves import range
 
-def add(EPOCH):
+def add(DIGITS, EPOCH):
     class colors:
         ok = '\033[92m'
         fail = '\033[91m'
         close = '\033[0m'
 
     TRAINING_SIZE = 80000
-    DIGITS = 3
     REVERSE = False
     MAXLEN = DIGITS + 1 + DIGITS
     chars = '0123456789+ '
@@ -177,7 +177,17 @@ def add(EPOCH):
     #####################################################
 
 def origin_add():
-    add(100)
+    digit = 3
+    epoch = 100
+    add(digit, epoch)
+
+def digit_add():
+    exT = np.zeros((3), dtype=float)
+    for i in range(3,6):
+        start = time.time()
+        add(i, 100)
+        exT[i-3] = time.time()-start
+    return exT
 
 if __name__ == "__main__":
     origin_add()
