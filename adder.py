@@ -4,7 +4,7 @@ from keras import layers
 import numpy as np
 from six.moves import range
 
-def add():
+def add(EPOCH):
     class colors:
         ok = '\033[92m'
         fail = '\033[91m'
@@ -118,7 +118,7 @@ def add():
 
     model.summary()
 
-    for iteration in range(100):
+    for iteration in range(EPOCH):
         print()
         print('-' * 50)
         print('Iteration', iteration)
@@ -176,5 +176,8 @@ def add():
 
     #####################################################
 
+def origin_add():
+    add(100)
+
 if __name__ == "__main__":
-    add()
+    origin_add()

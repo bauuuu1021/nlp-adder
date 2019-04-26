@@ -4,7 +4,7 @@ from keras import layers
 import numpy as np
 from six.moves import range
 
-def combine():
+def combine(EPOCH):
     class colors:
         ok = '\033[92m'
         fail = '\033[91m'
@@ -124,7 +124,7 @@ def combine():
 
     model.summary()
 
-    for iteration in range(100):
+    for iteration in range(EPOCH):
         print()
         print('-' * 50)
         print('Iteration', iteration)
@@ -176,5 +176,8 @@ def combine():
         fp.write("%f\n"%(correctness))
         fp.close()    
 
+def origin_combine():
+    combine(100)
+    
 if __name__ == "__main__":
-    combine()
+    origin_combine()

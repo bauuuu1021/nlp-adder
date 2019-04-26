@@ -6,9 +6,9 @@ import os
 # import file from another folder
 import sys
 sys.path.append('../')
-from adder import add
-from subtractor import sub
-from combine import combine
+from adder import origin_add
+from subtractor import origin_sub
+from combine import origin_combine
 
 def executeT(f):
     start = time.time()
@@ -16,9 +16,9 @@ def executeT(f):
     return time.time()-start
 
 exT = np.zeros((3), dtype=float)
-exT[0] = executeT(add)
-exT[1] = executeT(sub)
-exT[2] = executeT(combine)
+exT[0] = executeT(origin_add)
+exT[1] = executeT(origin_sub)
+exT[2] = executeT(origin_combine)
 
 # load correctness
 cor = np.zeros((3), dtype=float)
@@ -37,7 +37,7 @@ plt.legend()
 for i, v in enumerate(cor):
     plt.text(pos[i] - 0.08, v + 0.1, str(v))
 
-plt.savefig('../img/origin.png')
+plt.savefig('../img/test.png')
 plt.show()
 
 print(exT)

@@ -4,7 +4,7 @@ from keras import layers
 import numpy as np
 from six.moves import range
 
-def sub():
+def sub(EPOCH):
     class colors:
         ok = '\033[92m'
         fail = '\033[91m'
@@ -115,7 +115,7 @@ def sub():
 
     model.summary()
 
-    for iteration in range(100):
+    for iteration in range(EPOCH):
         print()
         print('-' * 50)
         print('Iteration', iteration)
@@ -167,5 +167,8 @@ def sub():
         fp.write("%f\n"%(correctness))
         fp.close()     
 
+def origin_sub():
+    sub(100)
+    
 if __name__ == "__main__":
-    sub()
+    origin_sub()
