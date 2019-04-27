@@ -6,13 +6,13 @@ import os
 # import file from another folder
 import sys
 sys.path.append('../')
-from adder import digit_add
-from subtractor import digit_sub
-from combine import digit_combine
+from adder import epoch_add
+from subtractor import epoch_sub
+from combine import epoch_combine
 
-time_add = digit_add()
-time_sub = digit_sub()
-time_combine = digit_combine()
+time_add = epoch_add()
+time_sub = epoch_sub()
+time_combine = epoch_combine()
 
 print(time_add)
 print(time_sub)
@@ -48,9 +48,10 @@ color='r',
 label='combine')
 
 plt.ylabel('Correctness(%)')
-plt.xticks(index, ('3-digit', '4-digit', '5-digit'))
-plt.legend()
+plt.xlabel('# of epoch')
+plt.xticks(index, ('100', '200', '300'))
+plt.legend(loc=4)
 
-plt.savefig('../img/digit.png')
+plt.savefig('../img/epoch.png')
 plt.show()
 os.remove("tmp.txt")

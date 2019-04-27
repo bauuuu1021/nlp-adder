@@ -115,17 +115,45 @@ def sub(DIGITS, EPOCH):
 
     model.summary()
 
-    for iteration in range(EPOCH):
-        print()
-        print('-' * 50)
-        print('Iteration', iteration)
-        model.fit(x_train, y_train,
-                batch_size=BATCH_SIZE,
-                epochs=1,
-                validation_data=(x_val, y_val))
-        for i in range(10):
-            ind = np.random.randint(0, len(x_val))
-            rowx, rowy = x_val[np.array([ind])], y_val[np.array([ind])]
+    while (EPOCH != 0):
+        if (EPOCH > 100):
+            loop = 100
+            EPOCH -= 100
+        else:
+            loop = EPOCH
+            EPOCH = 0
+
+        for iteration in range(loop):
+            print()
+            print('-' * 50)
+            print('Iteration', iteration)
+            model.fit(x_train, y_train,
+                    batch_size=BATCH_SIZE,
+                    epochs=1,
+                    validation_data=(x_val, y_val))
+            for i in range(10):
+                ind = np.random.randint(0, len(x_val))
+                rowx, rowy = x_val[np.array([ind])], y_val[np.array([ind])]
+                preds = model.predict_classes(rowx, verbose=0)
+                q = ctable.decode(rowx[0])
+                correct = ctable.decode(rowy[0])
+                guess = ctable.decode(preds[0], calc_argmax=False)
+                print('Q', q[::-1] if REVERSE else q, end=' ')
+                print('T', correct, end=' ')
+                if correct == guess:
+                    print(colors.ok + '☑' + colors.close, end=' ')
+                else:
+                    print(colors.fail + '☒' + colors.close, end=' ')
+                print(guess)
+
+        print("MSG : Prediction")
+
+        test_size = 1000
+        right = 0
+
+        for _ in range (test_size):
+            ind = np.random.randint(0, 60000)
+            rowx, rowy = test_x[np.array([ind])], test_y[np.array([ind])]
             preds = model.predict_classes(rowx, verbose=0)
             q = ctable.decode(rowx[0])
             correct = ctable.decode(rowy[0])
@@ -133,39 +161,19 @@ def sub(DIGITS, EPOCH):
             print('Q', q[::-1] if REVERSE else q, end=' ')
             print('T', correct, end=' ')
             if correct == guess:
+                right += 1
                 print(colors.ok + '☑' + colors.close, end=' ')
             else:
                 print(colors.fail + '☒' + colors.close, end=' ')
-            print(guess)
+            print(guess) 
 
-    print("MSG : Prediction")
-
-    test_size = 1000
-    right = 0
-
-    for _ in range (test_size):
-        ind = np.random.randint(0, 60000)
-        rowx, rowy = test_x[np.array([ind])], test_y[np.array([ind])]
-        preds = model.predict_classes(rowx, verbose=0)
-        q = ctable.decode(rowx[0])
-        correct = ctable.decode(rowy[0])
-        guess = ctable.decode(preds[0], calc_argmax=False)
-        print('Q', q[::-1] if REVERSE else q, end=' ')
-        print('T', correct, end=' ')
-        if correct == guess:
-            right += 1
-            print(colors.ok + '☑' + colors.close, end=' ')
-        else:
-            print(colors.fail + '☒' + colors.close, end=' ')
-        print(guess) 
-
-    correctness = (right/test_size)*100
-    print('Correctness: %f %%'%(correctness)) 
-    
-    if __name__ != "__main__":
-        fp = open("tmp.txt","a")
-        fp.write("%f\n"%(correctness))
-        fp.close()     
+        correctness = (right/test_size)*100
+        print('Correctness: %f %%'%(correctness)) 
+        
+        if __name__ != "__main__":
+            fp = open("tmp.txt","a")
+            fp.write("%f\n"%(correctness))
+            fp.close()     
 
 def origin_sub():
     digit = 3
@@ -179,6 +187,11 @@ def digit_sub():
         sub(i, 100)
         exT[i-3] = time.time()-start
     return exT
-    
+
+def epoch_sub():
+    start = time.time()
+    sub(3, 300)
+    return time.time()-start
+
 if __name__ == "__main__":
     origin_sub()
